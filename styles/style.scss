@@ -1,0 +1,14 @@
+body {
+    background-color: tomato !important;
+}
+
+.ringer-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.ringer-image {
+    position: absolute;
+    object-fit: scale-down;
+}
