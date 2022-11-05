@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import Carousel from "react-bootstrap/Carousel";
@@ -12,34 +11,47 @@ import RingerImage from "../components/ringerImage";
 // https://react-bootstrap.github.io/components/carousel/
 
 export default function Ringers() {
-  const [ringerNum, setRingerNum] = useState("000000");
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [ringerNum, setRingerNum] = useState("000303");
+  const [nextRingerNum, setNextRingerNum] = useState("000808");
+  const [activeRinger, setActiveRinger] = useState(true);
 
   useEffect(() => {
-    setInterval(() => {
-      generateNum().then((res) => {
-        // console.log("res", res);
+    generateNum()
+      .then((res) => {
+        console.log("res", res);
         setRingerNum(res);
-      });
-
-      let activeSlide = document.querySelector(".carousel-item.active");
-      activeSlide.style.border = "5px solid red";
-    }, 4000);
-  }, []);
+      })
+  }, [activeRinger]);
 
   let doneSlid = () => {
-    console.log("eeee");
+    setNextRingerNum(ringerNum);
+
+    setTimeout(() => {
+      setActiveRinger(!activeRinger);
+      console.log("activeRinger", activeRinger);
+    }, 4800);
+
+    // let nextSlide = document.querySelectorAll(".carousel-item:not(.active)");
   };
 
   return (
     <>
       <div className="ringer-page">
-        <Carousel onSlid={doneSlid}>
+        <Carousel onSlid={doneSlid} controls={true}>
+          {/* <Carousel.Item>
+            {activeRinger ? (
+              <RingerImage ringerNum={ringerNum} />
+            ) : (
+              <RingerImage ringerNum={nextRingerNum} />
+            )}
+          </Carousel.Item> */}
+
           <Carousel.Item>
             <RingerImage ringerNum={ringerNum} />
           </Carousel.Item>
+
           <Carousel.Item>
-            <RingerImage ringerNum={ringerNum} />
+            <RingerImage ringerNum={nextRingerNum} />
           </Carousel.Item>
         </Carousel>
       </div>
