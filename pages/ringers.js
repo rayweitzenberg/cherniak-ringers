@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import generateNum, { ranNum } from "../components/generateNum";
+import generateNum from "../components/generateNum";
 
 // Ringers on art blocks:
 // https://www.artblocks.io/collections/curated/projects/0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270/13
@@ -13,8 +13,10 @@ export default function Ringers() {
 
   useEffect(() => {
     setInterval(() => {
-        generateNum()
-        setRingerNum(ranNum);
+      generateNum().then((res) => {
+        console.log("res", res);
+        setRingerNum(res);
+      });
     }, 4000);
   }, []);
 
