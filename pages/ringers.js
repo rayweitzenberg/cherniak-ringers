@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Carousel from "react-bootstrap/Carousel";
 import generateNum from "../components/generateNum";
@@ -11,29 +11,24 @@ import RingerImage from "../components/ringerImage";
 // https://react-bootstrap.github.io/components/carousel/
 
 export default function Ringers() {
+  const [ringerTrigger, setRingerTrigger] = useState(true);
   const [ringerNum, setRingerNum] = useState("000303");
   const [nextRingerNum, setNextRingerNum] = useState("000808");
-  const [activeRinger, setActiveRinger] = useState(true);
-
-  useEffect(() => {
-    generateNum().then((res) => {
-      console.log("res", res);
-      !activeRinger ? setRingerNum(res) : setNextRingerNum(res);
-    });
-  }, [activeRinger]);
 
   let dunSlid = () => {
-    setTimeout(() => {
-      setActiveRinger(!activeRinger);
-      //   console.log("activeRinger", activeRinger);
-    }, 4800);
+    generateNum().then((res) => {
+      console.log("res", res);
+      ringerTrigger ? setRingerNum(res) : setNextRingerNum(res);
+    });
+
+    setRingerTrigger(!ringerTrigger);
   };
 
   return (
     <>
       <div className="ringer-page">
         <Carousel
-          interval={5000}
+          interval={10000}
           onSlid={dunSlid}
           controls={false}
           indicators={false}
