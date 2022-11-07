@@ -27,9 +27,9 @@ export default function Ringers() {
   // get random number of file + artwork and set that
   // for the upcoming slide to be shown
   //
-  // swap assignment/config of the next slide each time 
+  // swap assignment/config of the next slide each time
   // the most recently displayed slide is fully shown
-  // 
+  //
   let ringSlid = () => {
     generateNum().then((res) => {
       console.log("res", res[0]);
@@ -49,12 +49,16 @@ export default function Ringers() {
   // advances 2nd carousel which is triggered at start of 1st carousel's
   // transition using the 'onSlide' function
   //
+  // setting timeout to delay/stagger the 2nd carousel's transition
+  //
   let advanceSlide = () => {
-    if (slideIndex === 0) {
-      setSlideIndex(1);
-    } else {
-      setSlideIndex(0);
-    }
+    setTimeout(() => {
+      if (slideIndex === 0) {
+        setSlideIndex(1);
+      } else {
+        setSlideIndex(0);
+      }
+    }, 130);
   };
 
   //   let botSlid = () => {
