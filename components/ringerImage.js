@@ -12,7 +12,7 @@ export default function RingerImage(props) {
         sizes="100vw 100vw"
         alt={"/ring/" + props.ringerNum + ".png"}
       />
-      <h3 className="ringer-title">Ringers #{props.imgTitle}</h3>
+      {/* <h3 className="ringer-title">Ringers #{props.imgTitle}</h3> */}
     </div>
   );
 }

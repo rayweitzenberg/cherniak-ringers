@@ -14,14 +14,22 @@ export default function Ringers() {
   const [ringerTrigger, setRingerTrigger] = useState(true);
   const [ringerNum, setRingerNum] = useState("000303");
   const [nextRingerNum, setNextRingerNum] = useState("000808");
-  const [workNum, setWorkNum] = useState('303');
-  const [nextWorkNum, setNextWorkNum] = useState('808');
+  const [workNum, setWorkNum] = useState("303");
+  const [nextWorkNum, setNextWorkNum] = useState("808");
 
   const [botRingerNum, botSetRingerNum] = useState("000303");
   const [botNextRingerNum, botSetNextRingerNum] = useState("000808");
-  const [botWorkNum, botSetWorkNum] = useState('303');
-  const [botNextWorkNum, botSetNextWorkNum] = useState('808');
+  const [botWorkNum, botSetWorkNum] = useState("303");
+  const [botNextWorkNum, botSetNextWorkNum] = useState("808");
 
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  // get random number of file + artwork and set that
+  // for the upcoming slide to be shown
+  //
+  // swap assignment/config of the next slide each time 
+  // the most recently displayed slide is fully shown
+  // 
   let ringSlid = () => {
     generateNum().then((res) => {
       console.log("res", res[0]);
@@ -29,16 +37,6 @@ export default function Ringers() {
       ringerTrigger ? setWorkNum(res[1]) : setNextWorkNum(res[1]);
     });
 
-    generateNum().then((res) => {
-        console.log("res", res[0]);
-        ringerTrigger ? botSetRingerNum(res[0]) : botSetNextRingerNum(res[0]);
-        ringerTrigger ? botSetWorkNum(res[1]) : botSetNextWorkNum(res[1]);
-      });
-
-    setRingerTrigger(!ringerTrigger);
-  };
-
-  let botSlid = () => {
     generateNum().then((res) => {
       console.log("res", res[0]);
       ringerTrigger ? botSetRingerNum(res[0]) : botSetNextRingerNum(res[0]);
@@ -48,12 +46,34 @@ export default function Ringers() {
     setRingerTrigger(!ringerTrigger);
   };
 
+  // advances 2nd carousel which is triggered at start of 1st carousel's
+  // transition using the 'onSlide' function
+  //
+  let advanceSlide = () => {
+    if (slideIndex === 0) {
+      setSlideIndex(1);
+    } else {
+      setSlideIndex(0);
+    }
+  };
+
+  //   let botSlid = () => {
+  //     generateNum().then((res) => {
+  //       console.log("res", res[0]);
+  //       ringerTrigger ? botSetRingerNum(res[0]) : botSetNextRingerNum(res[0]);
+  //       ringerTrigger ? botSetWorkNum(res[1]) : botSetNextWorkNum(res[1]);
+  //     });
+
+  //     setRingerTrigger(!ringerTrigger);
+  //   };
+
   return (
     <>
       <div className="ringer-page">
         <Carousel
           interval={10000}
           onSlid={ringSlid}
+          onSlide={advanceSlide}
           controls={false}
           indicators={false}
         >
@@ -66,8 +86,11 @@ export default function Ringers() {
           </Carousel.Item>
         </Carousel>
 
+        {/* Carousel Direction: */}
+        {/* https://stackoverflow.com/a/62934734/4811066 */}
         <Carousel
-          interval={10000}
+          // interval={10000}
+          activeIndex={slideIndex}
           controls={false}
           indicators={false}
         >
@@ -76,7 +99,10 @@ export default function Ringers() {
           </Carousel.Item>
 
           <Carousel.Item>
-            <RingerImage ringerNum={botNextRingerNum} imgTitle={botNextWorkNum} />
+            <RingerImage
+              ringerNum={botNextRingerNum}
+              imgTitle={botNextWorkNum}
+            />
           </Carousel.Item>
         </Carousel>
       </div>
