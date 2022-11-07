@@ -1,7 +1,6 @@
-export let ranNum = 999
-
 const generateNum = async () => {
-  ranNum = Math.floor(Math.random() * 999);
+  let ranNum = Math.floor(Math.random() * 999);
+  let workNum = ranNum.toString();
 
   if (ranNum < 10) {
     ranNum = "00000" + ranNum;
@@ -13,7 +12,7 @@ const generateNum = async () => {
 
   // console.log("ranNum", ranNum);
 
-  return ranNum
+  return [ranNum, workNum];
 };
 
 export default generateNum;

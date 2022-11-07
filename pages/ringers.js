@@ -14,11 +14,14 @@ export default function Ringers() {
   const [ringerTrigger, setRingerTrigger] = useState(true);
   const [ringerNum, setRingerNum] = useState("000303");
   const [nextRingerNum, setNextRingerNum] = useState("000808");
+  const [workNum, setWorkNum] = useState('303');
+  const [nextWorkNum, setNextWorkNum] = useState('808');
 
   let dunSlid = () => {
     generateNum().then((res) => {
-      console.log("res", res);
-      ringerTrigger ? setRingerNum(res) : setNextRingerNum(res);
+      console.log("res", res[0]);
+      ringerTrigger ? setRingerNum(res[0]) : setNextRingerNum(res[0]);
+      ringerTrigger ? setWorkNum(res[1]) : setNextWorkNum(res[1]);
     });
 
     setRingerTrigger(!ringerTrigger);
@@ -34,11 +37,11 @@ export default function Ringers() {
           indicators={false}
         >
           <Carousel.Item>
-            <RingerImage ringerNum={ringerNum} />
+            <RingerImage ringerNum={ringerNum} imgTitle={workNum} />
           </Carousel.Item>
 
           <Carousel.Item>
-            <RingerImage ringerNum={nextRingerNum} />
+            <RingerImage ringerNum={nextRingerNum} imgTitle={nextWorkNum} />
           </Carousel.Item>
         </Carousel>
       </div>
